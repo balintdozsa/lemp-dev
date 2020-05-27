@@ -1,0 +1,45 @@
+server {
+	listen 80 default_server;
+	listen [::]:80 default_server;
+
+	root /project/public/;
+
+	index index.php index.html;
+
+	server_name _;
+
+	location / {
+		#try_files $uri $uri/ =404;
+		try_files $uri $uri/ /index.php?$args;
+	}
+
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+	}
+
+	location ~ \.html$ {
+                try_files $uri $uri/ =404;
+        }
+
+	location ~ /\.ht {
+		deny all;
+	}
+
+	#location /pma {
+	#	root /home/balintdozsa/Dev/;
+	#	index index.php;
+	#	try_files $uri $uri/ =404;
+	#
+	#	location ~ ^/pma/(doc|sql|setup)/ {
+	#		deny all;
+	#	}
+	#
+	#	location ~ /pma/(.+\.php)$ {
+	#		fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+	#		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+	#		include fastcgi_params;
+	#		include snippets/fastcgi-php.conf;
+	#	}
+	#}
+}
