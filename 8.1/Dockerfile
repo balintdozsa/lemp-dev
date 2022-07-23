@@ -13,12 +13,18 @@ RUN apt-get update && \
 # php
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	php8.1 \
-	php8.1-fpm \
+	php8.1-bcmath \
+	php8.1-bz2 \
+	php8.1-cli \
 	php8.1-curl \
+	php8.1-fpm \
+	php8.1-gd \
 	php8.1-mbstring \
 	php8.1-mysql \
 	php8.1-opcache \
 	php8.1-readline \
+	php8.1-sqlite3 \
+	php8.1-xdebug \
 	php8.1-xml \
 	php8.1-zip \
 	php-xdebug \
@@ -35,6 +41,11 @@ RUN cp /etc/nginx/nginx.conf /bckp/ && \
 	cp /etc/php/8.1/cli/php.ini /bckp/cli_php.ini && \
 	cp /etc/php/8.1/fpm/php-fpm.conf /bckp/ && \
 	cp /etc/php/8.1/fpm/php.ini /bckp/fpm_php.ini
+
+# PHP config
+RUN echo '' >> /etc/php/8.1/cli/php.ini && \
+	echo '[Xdebug]' >> /etc/php/8.1/cli/php.ini && \
+	echo 'xdebug.mode=coverage' >> /etc/php/8.1/cli/php.ini
 
 # copy conf files
 COPY files/ /
