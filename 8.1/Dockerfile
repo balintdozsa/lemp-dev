@@ -41,6 +41,9 @@ RUN cp /etc/nginx/nginx.conf /bckp/ && \
 	cp /etc/php/8.1/cli/php.ini /bckp/cli_php.ini && \
 	cp /etc/php/8.1/fpm/php-fpm.conf /bckp/ && \
 	cp /etc/php/8.1/fpm/php.ini /bckp/fpm_php.ini
+	
+RUN echo '' >> /etc/php/8.1/fpm/php-fpm.conf && \
+	echo 'include=/etc/php/8.1/fpm/user.conf' >> /etc/php/8.1/fpm/php-fpm.conf
 
 # PHP config
 RUN echo '' >> /etc/php/8.1/cli/php.ini && \
